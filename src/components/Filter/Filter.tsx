@@ -1,9 +1,8 @@
-import React from 'react';
-import { FilterLabel, FilterInput, FilterWrapper } from './Filter.styled';
-import { nanoid } from 'nanoid';
-import PropTypes from 'prop-types';
+import { FilterLabel, FilterInput, FilterWrapper } from "./Filter.styled";
+import { nanoid } from "nanoid";
+import { IFilter } from "components/types/types";
 
-export const Filter = ({ onChange, value }) => {
+export const Filter: React.FC<IFilter> = ({ onChange, value }) => {
   const filterId = nanoid(5);
   return (
     <FilterWrapper>
@@ -16,9 +15,4 @@ export const Filter = ({ onChange, value }) => {
       />
     </FilterWrapper>
   );
-};
-
-Filter.propTypes = {
-  onChange: PropTypes.func.isRequired,
-  value: PropTypes.string,
 };

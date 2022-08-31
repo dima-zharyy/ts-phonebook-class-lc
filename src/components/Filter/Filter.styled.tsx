@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from "styled-components";
 
 export const FilterWrapper = styled.div`
   display: flex;
@@ -6,7 +6,11 @@ export const FilterWrapper = styled.div`
   margin-bottom: 25px;
 `;
 
-export const FilterLabel = styled.div`
+interface ILabel {
+  htmlFor: string;
+}
+
+export const FilterLabel = styled.div<ILabel>`
   margin-right: 12px;
 
   white-space: nowrap;

@@ -9,8 +9,9 @@ import {
 } from "./App.styled";
 
 import { nanoid } from "nanoid";
+import { IAppState, IFormState } from "components/types/types";
 
-export class App extends Component {
+export class App extends Component<{}, IAppState> {
   state = {
     contacts: [],
     filter: "",
@@ -19,26 +20,31 @@ export class App extends Component {
   componentDidMount() {
     const savedContacts = localStorage.getItem("contacts");
 
-    try {
-      const parsedContacts = JSON.parse(savedContacts);
-      if (parsedContacts) {
-        this.setState({ contacts: parsedContacts });
+    if (typeof savedContacts === "string") {
+      try {
+        const parsedContacts = JSON.parse(savedContacts);
+        if (parsedContacts) {
+          this.setState({ contacts: parsedContacts });
+        }
+      } catch (error) {
+        console.log(error);
       }
-    } catch (error) {
-      console.log(error);
     }
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps: {}, prevState: IAppState) {
     if (prevState.contacts !== this.state.contacts) {
       localStorage.setItem("contacts", JSON.stringify(this.state.contacts));
     }
   }
 
-  onSubmit = (data) => {
-    const isAlreadyInContacts = this.state.contacts.some(
-      ({ name }) => name.toLocaleLowerCase() === data.name.toLocaleLowerCase()
-    );
+  onSubmit = (data: IFormState) => {
+    const isAlreadyInContacts =
+      this.state.contacts.length > 0 &&
+      this.state.contacts.some(
+        ({ name }: { name: string }) =>
+          name.toLowerCase() === data.name.toLowerCase()
+      );
 
     if (isAlreadyInContacts) {
       alert(`${data.name} is already in contacts.`);
@@ -52,18 +58,18 @@ export class App extends Component {
     }));
   };
 
-  handleFilterChange = (event) => {
+  handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     this.setState({ filter: event.target.value });
   };
 
   filteredContacts = () => {
     const { contacts, filter } = this.state;
-    return contacts.filter(({ name }) =>
-      name.toLocaleLowerCase().includes(filter.toLocaleLowerCase())
+    return contacts.filter(({ name }: { name: string }) =>
+      name.toLowerCase().includes(filter.toLowerCase())
     );
   };
 
-  handleClickDel = (id) => {
+  handleClickDel = (id: string) => {
     this.setState(({ contacts }) => ({
       contacts: contacts.filter((contact) => contact.id !== id),
     }));

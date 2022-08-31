@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 import {
   Form,
@@ -6,21 +6,21 @@ import {
   FormLabel,
   FormInput,
   Button,
-} from './ContactForm.styled';
+} from "./ContactForm.styled";
 
-import PropTypes from 'prop-types';
-import { nanoid } from 'nanoid';
+import { nanoid } from "nanoid";
+import { IFormProps, IFormState } from "components/types/types";
 
-export class ContactForm extends Component {
+export class ContactForm extends Component<IFormProps, IFormState> {
   state = {
-    name: '',
-    number: '',
+    name: "",
+    number: "",
   };
 
   inputNameId = nanoid(5);
   inputNumberId = nanoid(5);
 
-  handleSubmit = event => {
+  handleSubmit = (event: React.FormEvent): void => {
     event.preventDefault();
 
     this.props.onSubmit(this.state);
@@ -28,14 +28,14 @@ export class ContactForm extends Component {
     this.resetForm();
   };
 
-  handleInputChange = event => {
+  handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  resetForm = () => {
+  resetForm = (): void => {
     this.setState({
-      name: '',
-      number: '',
+      name: "",
+      number: "",
     });
   };
 
@@ -73,7 +73,3 @@ export class ContactForm extends Component {
     );
   }
 }
-
-ContactForm.propTypes = {
-  onSubmit: PropTypes.func.isRequired,
-};

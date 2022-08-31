@@ -1,15 +1,16 @@
-import React from 'react';
-
+import { IListItem } from "components/types/types";
 import {
   ContactItem,
   ContactTextWrapper,
   ContactName,
   Button,
-} from './ContactListItem.styled';
+} from "./ContactListItem.styled";
 
-import PropTypes from 'prop-types';
-
-export const ContactListItem = ({ name, number, onClick }) => {
+export const ContactListItem: React.FC<IListItem> = ({
+  name,
+  number,
+  onClick,
+}) => {
   return (
     <ContactItem>
       <ContactTextWrapper>
@@ -20,10 +21,4 @@ export const ContactListItem = ({ name, number, onClick }) => {
       </Button>
     </ContactItem>
   );
-};
-
-ContactListItem.propTypes = {
-  name: PropTypes.string.isRequired,
-  number: PropTypes.string.isRequired,
-  onClick: PropTypes.func.isRequired,
 };
